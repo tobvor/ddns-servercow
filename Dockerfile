@@ -1,4 +1,6 @@
-From ubuntu:18.04
+FROM ubuntu:18.04
+
+MAINTAINER Tobias Vornholt "t.vornholt@mailbox.org"
 
 # Install prerequisites
 RUN apt-get update && apt-get install -y curl
