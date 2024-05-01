@@ -1,4 +1,4 @@
-# Dynamic DNS Updater
+# Dynamic DNS Updater for Servercow
 This container is a dyndns client for servercow. 
 It is designed to run in a Docker container and updates the DNS records of a domain hosted on Servercow.de with the current public IP address of the container.
 
@@ -32,11 +32,27 @@ docker build -t dynamic-dns-updater .
 
 ```bash
 docker run -d \
-  --name dynamic-dns \
+  --name ddns-servercow \
   -e DOMAIN="yourdomain.com" \
   -e USER="your_api_username" \
   -e PASSWORD="your_api_password" \
-  dynamic-dns-updater
+  tobvor/ddns-servercow
+```
+
+3. Docker Compose Example
+
+```yaml
+version: '3'
+
+services:
+  ddns-servercow:
+    image: tobvor/ddns-servercow
+    container_name: ddns-servercow
+    environment:
+      - DOMAIN=yourdomain.com
+      - USER=your_api_username
+      - PASSWORD=your_api_password
+    restart: always
 ```
 
 ### Notes
@@ -51,3 +67,4 @@ The script continuously checks the public IP address of the container at a speci
 ## License
 
 This script is licensed under the [MIT License](LICENSE). Feel free to modify and distribute it as needed.
+
