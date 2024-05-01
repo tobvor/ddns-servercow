@@ -22,13 +22,7 @@ Before running this script, ensure you have the following:
 
 ### Running the Docker Container
 
-1. Build the Docker image:
-
-```bash
-docker build -t dynamic-dns-updater .
-```
-
-2. Run the Docker container:
+1. Run the Docker container:
 
 ```bash
 docker run -d \
@@ -39,7 +33,7 @@ docker run -d \
   tobvor/ddns-servercow
 ```
 
-3. Docker Compose Example
+2. Docker Compose Example
 
 ```yaml
 version: '3'
