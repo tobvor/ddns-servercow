@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - "main"
-      - "beta"
     tags:
       - 'v*'
 
@@ -16,9 +15,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: '0'
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
 
       - name: Bump version and push tag
         id: version_bump
