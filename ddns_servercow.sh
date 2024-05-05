@@ -9,6 +9,8 @@ SUBDOMAIN="${SUBDOMAIN:-$DOMAIN}"
 SUBS=("$SUBDOMAIN")
 IPv4="${IPv4:-true}"
 IPv6="${IPv6:-false}"
+PROVIDER_IPv4="${PROVIDER_IPv4:-http://ifconfig.co}"
+PROVIDER_IPv6="${PROVIDER_IPv6:-http://ifconfig.co}"
 
 function get_public_ip_v4 {
   curl -4 -sS \
@@ -17,7 +19,7 @@ function get_public_ip_v4 {
     --retry 3 \
     --retry-delay 0 \
     --retry-max-time 15 \
-    http://ifconfig.co
+    $PROVIDER_IPv4
 }
 
 function get_public_ip_v6 {
@@ -27,7 +29,7 @@ function get_public_ip_v6 {
     --retry 3 \
     --retry-delay 0 \
     --retry-max-time 15 \
-    http://ifconfig.co
+    $PROVIDER_IPv6
 }
 
 function update_dns_v4 {
