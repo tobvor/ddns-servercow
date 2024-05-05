@@ -14,6 +14,12 @@ jobs:
         with:
           fetch-depth: '0'
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Bump version and push tag
         id: version_bump
         uses: anothrNick/github-tag-action@1
@@ -37,6 +43,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
+          platforms: linux/amd64,linux/arm/v7,linux/arm64
           push: true
           tags: |
             tobvor/ddns-servercow:latest
@@ -52,7 +59,6 @@ jobs:
           WITH_V: true
       
       - name: Docker Hub Description
-        if: success() && github.ref == 'refs/heads/main' 
         uses: peter-evans/dockerhub-description@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
