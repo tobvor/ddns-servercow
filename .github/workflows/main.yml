@@ -43,7 +43,7 @@ jobs:
           tags: ${{ steps.version_bump.outputs.new_tag }}
 
       - name: Bump version and push tag
-        id: version_bump
+        id: git_tag
         uses: anothrNick/github-tag-action@1
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
