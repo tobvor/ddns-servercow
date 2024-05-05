@@ -1,6 +1,6 @@
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 
-MAINTAINER Tobias Vornholt "t.vornholt@mailbox.org"
+LABEL maintainer="Tobias Vornholt t.vornholt@mailbox.org"
 
 # Install prerequisites
 RUN apt-get update && apt-get install -y curl
