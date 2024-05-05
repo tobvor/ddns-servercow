@@ -40,7 +40,9 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ steps.version_bump.outputs.new_tag }}
+          tags: |
+            tobvor/ddns-servercow:latest
+            tobvor/ddns-servercow:${{ steps.version_bump.outputs.new_tag }}
 
       - name: Bump version and push tag
         id: git_tag
