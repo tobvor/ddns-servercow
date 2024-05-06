@@ -19,6 +19,10 @@ Before running this script, ensure you have the following:
 - `PASSWORD`: Your Servercow.de API password.
 - `INTERVAL` (optional): Interval in seconds between each DNS update (default is 120 seconds).
 - `SUBDOMAIN` (optional): Subdomain to update (default is the root domain).
+- `IPv4` (optional): Whether to update IPv4 address (default is true).
+- `IPv6` (optional): Whether to update IPv6 address (default is false).
+- `PROVIDER_IPv4` (optional): Provider URL to fetch IPv4 address (default is http://ifconfig.co).
+- `PROVIDER_IPv6` (optional): Provider URL to fetch IPv6 address (default is http://ifconfig.co).
 
 ### Running the Docker Container
 
@@ -30,6 +34,8 @@ docker run -d \
   -e DOMAIN="yourdomain.com" \
   -e USER="your_api_username" \
   -e PASSWORD="your_api_password" \
+  -e IPv4="true" \
+  -e IPv6="false" \
   tobvor/ddns-servercow
 ```
 
@@ -46,6 +52,8 @@ services:
       - DOMAIN=yourdomain.com
       - USER=your_api_username
       - PASSWORD=your_api_password
+      - IPv4=true
+      - IPv6=false
     restart: always
 ```
 
@@ -53,6 +61,8 @@ services:
 
 - Make sure to replace `"yourdomain.com"`, `"your_api_username"`, and `"your_api_password"` with your actual domain name, Servercow.de API username, and password respectively.
 - If you want to specify a subdomain, you can set the `SUBDOMAIN` environment variable accordingly.
+- You can enable/disable IPv4 and IPv6 updates by setting the `IPv4` and `IPv6` environment variables.
+- If you want to use a different provider to fetch IP addresses, you can set `PROVIDER_IPv4` and `PROVIDER_IPv6` environment variables accordingly.
 
 ## Behavior
 
@@ -61,4 +71,3 @@ The script continuously checks the public IP address of the container at a speci
 ## License
 
 This script is licensed under the [MIT License](LICENSE). Feel free to modify and distribute it as needed.
-
