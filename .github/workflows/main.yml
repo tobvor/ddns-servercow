@@ -4,34 +4,65 @@ on:
   push:
     branches:
       - "main"
-      - "beta"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v4
-      -        
-        name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
         with:
-          images: tobvor/ddns-servercow 
-      -
-        name: Login to Docker Hub
-        if: github.event_name != 'pull_request'
+          fetch-depth: '0'
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Bump version and push tag
+        id: version_bump
+        uses: anothrNick/github-tag-action@1
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+          DEFAULT_BRANCH: main
+          DEFAULT_BUMP: patch
+          WITH_V: true
+          DRY_RUN: true
+
+      - name: Login to Docker Hub
+        if: steps.version_bump.outputs.new_tag != steps.version_bump.outputs.old_tag
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
+      
+      - name: Build and push
+        if: steps.version_bump.outputs.new_tag != steps.version_bump.outputs.old_tag
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          push: true
+          tags: |
+            tobvor/ddns-servercow:latest
+            tobvor/ddns-servercow:${{ steps.version_bump.outputs.new_tag }}
+
+      - name: Bump version and push tag
+        id: git_tag
+        uses: anothrNick/github-tag-action@1
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+          DEFAULT_BRANCH: main
+          DEFAULT_BUMP: patch
+          WITH_V: true
+      
+      - name: Docker Hub Description
+        uses: peter-evans/dockerhub-description@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: tobvor/ddns-servercow
+          short-description: ${{ github.event.repository.description }}
+          enable-url-completion: true
