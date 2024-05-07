@@ -1,26 +1,27 @@
 # Dynamic DNS Updater for Servercow
 This container is a dyndns client for servercow. 
-It is designed to run in a Docker container and updates the DNS records of a domain hosted on Servercow.de with the current public IP address of the container.
+It is designed to run in a Docker environment and updates the DNS records of a domain hosted on servercow.de with the current public IP address.
+
 
 ## Prerequisites
 
 Before running this script, ensure you have the following:
 
 - Docker installed on your system.
-- Access to a domain hosted on Servercow.de.
-- Servercow.de API credentials (username and password).
+- Access to a domain hosted on servercow.de.
+- Servercow.de credentials (username and password) with access to the DNS API.
 
 ## Usage
 
 ### Environment Variables
 
 - `DOMAIN`: The domain name for which DNS records need to be updated.
-- `USER`: Your Servercow.de API username.
-- `PASSWORD`: Your Servercow.de API password.
+- `USER`: servercow.de username (user needs access to the DNS API).
+- `PASSWORD`: servercow.de password.
 - `INTERVAL` (optional): Interval in seconds between each DNS update (default is 120 seconds).
 - `SUBDOMAIN` (optional): Subdomain to update (default is the root domain).
 - `IPv4` (optional): Whether to update IPv4 address (default is true).
-- `IPv6` (optional): Whether to update IPv6 address (default is false).
+- `IPv6` (optional): Whether to update IPv6 address (default is false). See notes below. ⚠️  
 - `PROVIDER_IPv4` (optional): Provider URL to fetch IPv4 address (default is http://ifconfig.co).
 - `PROVIDER_IPv6` (optional): Provider URL to fetch IPv6 address (default is http://ifconfig.co).
 
@@ -63,6 +64,7 @@ services:
 - If you want to specify a subdomain, you can set the `SUBDOMAIN` environment variable accordingly.
 - You can enable/disable IPv4 and IPv6 updates by setting the `IPv4` and `IPv6` environment variables.
 - If you want to use a different provider to fetch IP addresses, you can set `PROVIDER_IPv4` and `PROVIDER_IPv6` environment variables accordingly.
+- ⚠️ If the parameter `IPv6` is set to `true`, either IPv6 support must be activated for Docker (see [Enable IPv6 support](https://docs.docker.com/config/daemon/ipv6/)) or the container must be executed within the host network using `network_mode: host`. 
 
 ## Behavior
 
