@@ -22,8 +22,8 @@ Before running this script, ensure you have the following:
 - `SUBDOMAIN` (optional): Subdomain to update (default is the root domain).
 - `IPv4` (optional): Whether to update IPv4 address (default is true).
 - `IPv6` (optional): Whether to update IPv6 address (default is false). See notes below. ⚠️  
-- `PROVIDER_IPv4` (optional): Provider URL to fetch IPv4 address (default is http://ifconfig.co).
-- `PROVIDER_IPv6` (optional): Provider URL to fetch IPv6 address (default is http://ifconfig.co).
+- `PROVIDER_IPv4` (optional): Provider URL to fetch IPv4 address (default is https://ifconfig.co).
+- `PROVIDER_IPv6` (optional): Provider URL to fetch IPv6 address (default is https://ifconfig.co).
 
 ### Running the Docker Container
 
