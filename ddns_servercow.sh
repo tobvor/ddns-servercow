@@ -9,8 +9,8 @@ SUBDOMAIN="${SUBDOMAIN:-$DOMAIN}"
 SUBS=("$SUBDOMAIN")
 IPv4="${IPv4:-true}"
 IPv6="${IPv6:-false}"
-PROVIDER_IPv4="${PROVIDER_IPv4:-http://ifconfig.co}"
-PROVIDER_IPv6="${PROVIDER_IPv6:-http://ifconfig.co}"
+PROVIDER_IPv4="${PROVIDER_IPv4:-https://ifconfig.co}"
+PROVIDER_IPv6="${PROVIDER_IPv6:-https://ifconfig.co}"
 
 function get_public_ip_v4 {
   curl -4 -sS \
